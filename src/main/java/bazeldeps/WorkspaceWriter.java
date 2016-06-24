@@ -13,6 +13,7 @@ public class WorkspaceWriter {
     dependencies.values().stream()
       .flatMap(Collection::stream)
       .sorted(Comparator.comparing(Artifact::getArtifactId))
+      .distinct()
       .forEach(artifact -> {
         out.format("maven_jar(name = \"%s\", artifact = \"%s\")\n", Writer.artifactName(artifact),
                    artifact.toString());
