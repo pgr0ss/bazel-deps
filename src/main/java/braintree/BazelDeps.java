@@ -1,6 +1,5 @@
 package braintree;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -14,28 +13,21 @@ import com.google.common.collect.Sets;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
 import org.eclipse.aether.collection.DependencyCollectionException;
-import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
-import org.kohsuke.args4j.Option;
 
 public class BazelDeps {
-
-  @Option(name = "-x", usage = "Exclude a libraries dependencies")
-  private String excludeArtifact;
-
-  @Argument(usage = "<artifact id>")
-  private List<String> artifactNames = new ArrayList<>();
 
   public static void main(String[] args) throws DependencyCollectionException, CmdLineException {
     new BazelDeps().doMain(args);
   }
 
   public void doMain(String[] args) throws DependencyCollectionException, CmdLineException {
-    CmdLineParser parser = new CmdLineParser(this);
+    Configuration config = new Configuration();
+    CmdLineParser parser = new CmdLineParser(config);
     parser.parseArgument(args);
 
-    if (artifactNames.isEmpty()) {
+    if (config.artifactNames.isEmpty()) {
       System.out.print("Usage: java -jar bazel-deps-1.0-SNAPSHOT");
       parser.printSingleLineUsage(System.out);
       System.out.println();
@@ -47,11 +39,11 @@ public class BazelDeps {
 
     System.err.println("Fetching dependencies from maven...\n");
 
-    Map<Artifact, Set<Artifact>> dependencies = fetchDependencies(artifactNames);
+    Map<Artifact, Set<Artifact>> dependencies = fetchDependencies(config.artifactNames);
 
     Set<Artifact> excludeDependencies =
-      excludeArtifact != null ? Maven.transitiveDependencies(new DefaultArtifact(excludeArtifact))
-                              : ImmutableSet.of();
+      config.excludeArtifact != null ? Maven.transitiveDependencies(new DefaultArtifact(config.excludeArtifact))
+                                     : ImmutableSet.of();
 
     printWorkspace(dependencies, excludeDependencies);
     printBuildEntries(dependencies, excludeDependencies);
