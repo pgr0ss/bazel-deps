@@ -1,4 +1,4 @@
-package braintree;
+package bazeldeps;
 
 import java.util.List;
 import java.util.Set;
@@ -72,7 +72,7 @@ public class Maven {
     return locator.getService(RepositorySystem.class);
   }
 
-  public static DefaultRepositorySystemSession newRepositorySystemSession(RepositorySystem system) {
+  private static DefaultRepositorySystemSession newRepositorySystemSession(RepositorySystem system) {
     DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
 
     LocalRepository localRepo = new LocalRepository("target/local-repo");
@@ -81,7 +81,7 @@ public class Maven {
     return session;
   }
 
-  public static List<RemoteRepository> repositories() {
+  private static List<RemoteRepository> repositories() {
     return ImmutableList.of(
       new RemoteRepository.Builder("central", "default", "http://central.maven.org/maven2/")
         .build());

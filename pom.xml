@@ -42,7 +42,7 @@
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>braintree.BazelDeps</mainClass>
+                  <mainClass>bazeldeps.BazelDeps</mainClass>
                 </transformer>
               </transformers>
             </configuration>
@@ -92,6 +92,12 @@
       <groupId>args4j</groupId>
       <artifactId>args4j</artifactId>
       <version>2.32</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>
