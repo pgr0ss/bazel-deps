@@ -104,7 +104,7 @@ public class BazelDeps {
   }
 
   private static String artifactName(Artifact artifact) {
-    return sanitizeName(artifact.getGroupId()) + "_" + sanitizeName(artifact.getArtifactId());
+    return sanitizeName(artifact.getGroupId()) + "_" + sanitizeName(artifact.getArtifactId()) + "_" + sanitizeName(artifact.getVersion());
   }
 
   private static String sanitizeName(String name) {
