@@ -6,13 +6,13 @@ Generate [bazel](http://bazel.io/) dependencies for maven artifacts
 
 ```bash
 mvn package
-java -jar target/bazel-deps-1.0-SNAPSHOT.jar <maven artifact>...
+java -jar target/bazel-deps-2.0-SNAPSHOT.jar <maven artifact>...
 ```
 
 ## Example
 
 ```bash
-% java -jar target/bazel-deps-1.0-SNAPSHOT.jar com.fasterxml.jackson.core:jackson-databind:2.5.0 junit:junit:jar:4.12
+% java -jar target/bazel-deps-2.0-SNAPSHOT.jar com.fasterxml.jackson.core:jackson-databind:2.5.0 junit:junit:jar:4.12
 
 
 --------- Add these lines to your WORKSPACE file ---------
