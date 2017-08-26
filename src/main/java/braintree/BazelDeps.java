@@ -24,6 +24,9 @@ public class BazelDeps {
   @Option(name = "-x", usage = "Exclude a libraries dependencies")
   private String excludeArtifact;
 
+  @Option(name = "-r", usage = "Specify a default maven server")
+  private String repository;
+
   @Argument(usage = "<artifact id>")
   private List<String> artifactNames = new ArrayList<>();
 
@@ -69,6 +72,9 @@ public class BazelDeps {
   private void printWorkspace(Map<Artifact, Set<Artifact>> dependencies,
                               Set<Artifact> excludeDependencies) {
     System.out.println("\n\n--------- Add these lines to your WORKSPACE file ---------\n");
+    if(repository != null){
+      System.out.format("maven_server(name = \"default\", url = \"%s\")\n", repository);
+    }
     dependencies.values().stream()
       .flatMap(Collection::stream)
       .filter(artifact -> !excludeDependencies.contains(artifact))
