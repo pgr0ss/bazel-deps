@@ -24,6 +24,9 @@ public class BazelDeps {
   @Option(name = "-x", usage = "Exclude a libraries dependencies")
   private String excludeArtifact;
 
+  @Option(name = "-r", usage = "specify a maven repository")
+  private String repository;
+
   @Argument(usage = "<artifact id>")
   private List<String> artifactNames = new ArrayList<>();
 
@@ -74,8 +77,12 @@ public class BazelDeps {
       .filter(artifact -> !excludeDependencies.contains(artifact))
       .sorted(Comparator.comparing(Artifact::getArtifactId))
       .forEach(artifact -> {
-        System.out.format("maven_jar(name = \"%s\", artifact = \"%s\")\n", artifactName(artifact),
+        System.out.format("maven_jar(name = \"%s\", artifact = \"%s\"", artifactName(artifact),
                           artifact.toString());
+        if (repository != null) {
+          System.out.format(", repository = \"%s\"", repository);
+        }
+        System.out.print(")\n");
       });
   }
 
