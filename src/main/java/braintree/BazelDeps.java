@@ -11,6 +11,7 @@ import java.util.Set;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
+import java.util.stream.Collectors;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
 import org.eclipse.aether.collection.DependencyCollectionException;
@@ -75,9 +76,11 @@ public class BazelDeps {
     if(repository != null){
       System.out.format("maven_server(name = \"default\", url = \"%s\")\n", repository);
     }
-    dependencies.values().stream()
+    Set<Artifact> uniqueDependencies = dependencies.values().stream()
       .flatMap(Collection::stream)
-      .filter(artifact -> !excludeDependencies.contains(artifact))
+      .collect(Collectors.toSet());
+
+    Sets.difference(uniqueDependencies, excludeDependencies).stream()
       .sorted(Comparator.comparing(Artifact::getArtifactId))
       .forEach(artifact -> {
         System.out.format("maven_jar(name = \"%s\", artifact = \"%s\")\n", artifactName(artifact),
