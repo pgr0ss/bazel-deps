@@ -4,9 +4,7 @@ Generate [bazel](http://bazel.io/) dependencies for maven artifacts
 
 ## Deprecated
 
-I no longer use `bazel-deps` on my projects, nor do I actively maintain it. Now, I use `transitive_maven_jar` from the official migration-tooling project: https://github.com/bazelbuild/migration-tooling#transitive_maven_jar
-
-I still accept pull requests from others, though.
+I no longer use `bazel-deps` on my projects, nor do I actively maintain it. Now, I use the official [rules_jvm_external](https://github.com/bazelbuild/rules_jvm_external).
 
 ## Usage
 
